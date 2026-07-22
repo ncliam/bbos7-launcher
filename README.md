@@ -35,17 +35,6 @@ No adb, no special permissions, no root.
 - **Long-press an app**: pin/unpin, sort into a tab, assign an Alt-shortcut, app info.
 - **Trackpad**: moves the selection; **Alt + a letter** opens the app you mapped to it.
 
-### Companion: Q25 Unlock Helper (optional)
-
-A separate small app that lets you type your lock-screen PIN with the physical keyboard, and stays invisible to banking apps (it's only active while the phone is locked). It needs a **one-time adb grant** and is distributed as a direct APK by the maintainer:
-
-```
-adb install Q25-Unlock-Helper-x.y.z.apk
-adb shell pm grant com.q25.unlockhelper android.permission.WRITE_SECURE_SETTINGS
-```
-
-Then open it once to start the watcher. Note: the grant must be repeated each time you reinstall the app.
-
 ### Build from source
 
 ```
@@ -87,17 +76,6 @@ Không cần adb, không cần quyền đặc biệt, không cần root.
 - **Gõ bàn phím**: mở tìm kiếm ngay, không phân biệt dấu (`ky vuong` ra "Kỳ Vương").
 - **Giữ lâu một app**: ghim/bỏ ghim, sắp vào tab, gán phím tắt Alt, thông tin ứng dụng.
 - **Trackpad**: di chuyển vùng chọn; **Alt + một phím chữ** mở app bạn đã gán.
-
-### App đi kèm: Q25 Unlock Helper (tùy chọn)
-
-Một app nhỏ riêng, giúp bạn nhập mã PIN màn hình khoá bằng bàn phím vật lý, và tự ẩn khỏi app ngân hàng (chỉ hoạt động khi máy đang khoá). App cần **cấp quyền một lần qua adb** và được maintainer phát hành dưới dạng APK trực tiếp:
-
-```
-adb install Q25-Unlock-Helper-x.y.z.apk
-adb shell pm grant com.q25.unlockhelper android.permission.WRITE_SECURE_SETTINGS
-```
-
-Sau đó mở app một lần để khởi động. Lưu ý: mỗi lần cài lại app phải cấp quyền lại.
 
 ### Tự build từ mã nguồn
 
