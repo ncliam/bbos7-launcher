@@ -1,85 +1,113 @@
-# BBOS7 Launcher cho Zinwa Q25
+# BBOS7 Launcher
 
-Launcher Android tái tạo giao diện BlackBerry OS 7, viết riêng cho Zinwa Q25
-(màn hình vuông 720×720, bàn phím QWERTY vật lý, Android 14, chưa root).
+A BlackBerry OS 7–style launcher for the **Unihertz / BlackBerry Zinwa Q25** — square 720×720 screen, physical QWERTY keyboard, Android 14, no root required.
 
-## Kiến trúc
+[![Latest release](https://img.shields.io/github/v/release/ncliam/bbos7-launcher)](https://github.com/ncliam/bbos7-launcher/releases/latest)
 
-Màn hình chính **chính là panel kéo lên**, đúng như BBOS7 — không có lưới icon
-riêng ở lớp nền. Phía sau panel chỉ có wallpaper và thanh thông tin.
+**🇬🇧 English** · [🇻🇳 Tiếng Việt](#tiếng-việt)
 
-- Nấc PEEK: panel hé một hàng, hiện tab Yêu thích (app đã ghim) — đây là "màn hình chính".
-- Kéo lên HALF/FULL: hiện thanh tab và toàn bộ danh sách của tab đang chọn.
-- Gõ chữ trên bàn phím vật lý ở bất kỳ đâu: mở tìm kiếm ngay, không cần bấm gì trước.
+---
 
-## Trạng thái — Đợt 2
+## English
 
-Đã có:
-- `LauncherActivity` — HOME intent, Back thoát tìm kiếm rồi mới thu gọn panel,
-  không bao giờ thoát ra màn hình đen.
-- `AppRepository` — quét app, tự cập nhật khi cài/gỡ, Collator tiếng Việt,
-  đếm số lần mở app cục bộ (không dùng `UsageStatsManager`).
-- `PinnedApps` — app ghim, seed 8 app lõi lần chạy đầu, ghim/gỡ qua menu giữ lâu.
-- `TrayLayout` — panel ba nấc PEEK / HALF / FULL, tự viết.
-- `AppTab` / `AppClassifier` — 5 tab: Yêu thích, Tất cả, Đa phương tiện, Hay dùng, Đã tải.
-  Tab Đa phương tiện lấy theo intent category của hệ thống, không đoán theo tên package.
-- `StatusPanelView` — vùng đỉnh: đồng hồ lớn, nút hồ sơ âm thanh, nút tìm kiếm.
-  Status bar Android hiện thường trực, layout vẽ tràn ra sau nó nên lớp phủ liền mạch.
-- `TabCarouselView` — thanh tab kiểu carousel, trong suốt khi thường và chuyển
-  thành dải xanh khi trackpad focus vào. Bấm để gập/mở panel, trái/phải để đổi tab.
-- Điều hướng bằng trackpad: khung xanh bao icon đang chọn, tên app hiện ở dòng
-  riêng trên lưới, focus không lọt sang tab khác và không chạy xuống icon bị che.
-- Tìm kiếm không phân biệt dấu (`ky vuong` → "Kỳ Vương").
+### What it is
 
-**Việc tiếp theo:** bộ icon + wallpaper vector BBOS7 tự vẽ — hiện vẫn dùng icon gốc
-của từng app nên nhìn vẫn "Android" chứ chưa ra chất BlackBerry.
+The home screen **is a pull-up tray**, exactly like BBOS7 — no separate icon grid on the wallpaper. Peek shows your pinned favorites; pull up for tabs and the full app list. Just start typing on the physical keyboard anywhere to search instantly.
 
-Sau đó: sắp xếp lại thứ tự icon đã ghim bằng kéo thả.
+### Requirements
 
-## Quyền
+- Unihertz / BlackBerry Zinwa **Q25** (best experience). Runs on Android 8.0+ but the layout is tuned for the Q25's square screen.
+- "Install unknown apps" enabled for your browser or file manager.
 
-Launcher không xin quyền nào cả. Đặc biệt là **không**
-đọc SMS hay thông báo — máy này dùng cho ngân hàng, nên đánh đổi là bỏ huy hiệu
-đếm tin nhắn chưa đọc của BBOS7 gốc. Hồ sơ âm thanh chỉ đổi Chuông ↔ Rung; chế độ
-Im lặng đòi quyền Do Not Disturb nên không làm.
+### Install
 
-## Build
+1. Download **`BBOS7-Launcher-x.y.z.apk`** from the [latest release](https://github.com/ncliam/bbos7-launcher/releases/latest).
+2. Open the APK and install it (allow "unknown apps" if prompted).
+3. Set it as your home app: press **Home**, then pick **BBOS7** → *Always*. (Or *Settings → Apps → Default apps → Home app*.)
 
-```sh
-./build.sh                 # assembleDebug
-./build.sh assembleRelease # cần các biến BBOS7_KEYSTORE* để ký
+No adb, no special permissions, no root.
+
+### Using it
+
+- **Peek** (home): a row of pinned favorites.
+- **Pull up** (half / full): tabs + the full app list.
+- **Type on the keyboard**: search opens instantly, accent-insensitive (`ky vuong` finds "Kỳ Vương").
+- **Long-press an app**: pin/unpin, sort into a tab, assign an Alt-shortcut, app info.
+- **Trackpad**: moves the selection; **Alt + a letter** opens the app you mapped to it.
+
+### Companion: Q25 Unlock Helper (optional)
+
+A separate small app that lets you type your lock-screen PIN with the physical keyboard, and stays invisible to banking apps (it's only active while the phone is locked). It needs a **one-time adb grant** and is distributed as a direct APK by the maintainer:
+
+```
+adb install Q25-Unlock-Helper-x.y.z.apk
+adb shell pm grant com.q25.unlockhelper android.permission.WRITE_SECURE_SETTINGS
 ```
 
-`build.sh` bắt buộc phải dùng: JDK mặc định của máy là 23, còn AGP cần 17
-(`/opt/homebrew/opt/openjdk@17`).
+Then open it once to start the watcher. Note: the grant must be repeated each time you reinstall the app.
 
-APK: `app/build/outputs/apk/debug/app-debug.apk`
+### Build from source
 
-## Cài lên máy
+```
+git clone https://github.com/ncliam/bbos7-launcher.git
+cd bbos7-launcher
+./gradlew :app:assembleDebug        # JDK 17, Android SDK 35
+```
+The APK lands in `app/build/outputs/apk/debug/`. Releases are built and published automatically by GitHub Actions on any `v*` tag.
 
-Máy phải ở chế độ File Transfer/MTP thì `adb` mới thấy.
+### License
 
-```sh
-ADB=/opt/homebrew/share/android-commandlinetools/platform-tools/adb
-$ADB devices                                    # phải thấy máy
-$ADB install -r app/build/outputs/apk/debug/app-debug.apk
-$ADB shell cmd package set-home-activity com.q25.bbos7/.LauncherActivity
+Not yet decided — see the maintainer before reusing the code.
+
+---
+
+## Tiếng Việt
+
+### Giới thiệu
+
+Màn hình chính **chính là panel kéo lên**, đúng như BBOS7 — không có lưới icon riêng trên wallpaper. Nấc hé (peek) hiện các app yêu thích đã ghim; kéo lên để thấy thanh tab và toàn bộ danh sách app. Gõ chữ trên bàn phím vật lý ở bất kỳ đâu là mở tìm kiếm ngay.
+
+### Yêu cầu
+
+- Unihertz / BlackBerry Zinwa **Q25** (trải nghiệm tốt nhất). Chạy được trên Android 8.0+ nhưng giao diện tối ưu cho màn hình vuông của Q25.
+- Đã bật "Cài ứng dụng không rõ nguồn gốc" cho trình duyệt hoặc trình quản lý tệp.
+
+### Cài đặt
+
+1. Tải **`BBOS7-Launcher-x.y.z.apk`** từ [bản phát hành mới nhất](https://github.com/ncliam/bbos7-launcher/releases/latest).
+2. Mở file APK và cài (cho phép "nguồn không rõ" nếu được hỏi).
+3. Đặt làm màn hình chính: bấm **Home**, chọn **BBOS7** → *Luôn dùng*. (Hoặc *Cài đặt → Ứng dụng → Ứng dụng mặc định → Ứng dụng màn hình chính*.)
+
+Không cần adb, không cần quyền đặc biệt, không cần root.
+
+### Cách dùng
+
+- **Nấc hé** (màn hình chính): một hàng app yêu thích đã ghim.
+- **Kéo lên** (nửa / đầy): thanh tab + toàn bộ danh sách app.
+- **Gõ bàn phím**: mở tìm kiếm ngay, không phân biệt dấu (`ky vuong` ra "Kỳ Vương").
+- **Giữ lâu một app**: ghim/bỏ ghim, sắp vào tab, gán phím tắt Alt, thông tin ứng dụng.
+- **Trackpad**: di chuyển vùng chọn; **Alt + một phím chữ** mở app bạn đã gán.
+
+### App đi kèm: Q25 Unlock Helper (tùy chọn)
+
+Một app nhỏ riêng, giúp bạn nhập mã PIN màn hình khoá bằng bàn phím vật lý, và tự ẩn khỏi app ngân hàng (chỉ hoạt động khi máy đang khoá). App cần **cấp quyền một lần qua adb** và được maintainer phát hành dưới dạng APK trực tiếp:
+
+```
+adb install Q25-Unlock-Helper-x.y.z.apk
+adb shell pm grant com.q25.unlockhelper android.permission.WRITE_SECURE_SETTINGS
 ```
 
-Sau mỗi lần `install -r`, hệ thống có thể tạm rơi về launcher cũ dù mặc định vẫn
-là BBOS7 — bấm Home một lần nữa là về đúng.
+Sau đó mở app một lần để khởi động. Lưu ý: mỗi lần cài lại app phải cấp quyền lại.
 
-### Quay về launcher cũ
+### Tự build từ mã nguồn
 
-```sh
-$ADB shell cmd package set-home-activity <package-launcher-cũ>/<activity>
-# hoặc gỡ hẳn: $ADB uninstall com.q25.bbos7
 ```
-
-Gỡ APK xong, bấm Home sẽ hiện lại hộp thoại chọn launcher.
-
-## Đo thời gian khởi động
-
-```sh
-$ADB shell am start -W -n com.q25.bbos7/.LauncherActivity   # mục tiêu TotalTime < 400ms
+git clone https://github.com/ncliam/bbos7-launcher.git
+cd bbos7-launcher
+./gradlew :app:assembleDebug        # JDK 17, Android SDK 35
 ```
+APK nằm ở `app/build/outputs/apk/debug/`. Các bản release được GitHub Actions tự động build và phát hành khi đẩy tag `v*`.
+
+### Giấy phép
+
+Chưa quyết định — liên hệ maintainer trước khi sử dụng lại mã nguồn.
