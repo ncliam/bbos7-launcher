@@ -39,9 +39,14 @@ jobs:
           chmod +x gradlew
           ./gradlew :app:assembleRelease --no-daemon
           mv app/build/outputs/apk/release/app-release.apk "BBOS7-Launcher-${VERSION_NAME}.apk"
+          # Also publish a stable, version-less filename so a single "latest" download
+          # link always works: /releases/latest/download/BBOS7-Launcher.apk
+          cp "BBOS7-Launcher-${VERSION_NAME}.apk" "BBOS7-Launcher.apk"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: BBOS7-Launcher-*.apk
+          files: |
+            BBOS7-Launcher-*.apk
+            BBOS7-Launcher.apk
           generate_release_notes: true
