@@ -1,0 +1,47 @@
+name: Release
+
+# Đẩy một tag dạng v* (vd: v0.1.0) là workflow tự build APK release đã ký
+# và tạo GitHub Release đính kèm. versionName lấy từ tag, versionCode từ số lần chạy.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Decode keystore
+        run: echo "${{ secrets.BBOS7_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/bbos7-release.jks"
+
+      - name: Build signed release APK
+        env:
+          BBOS7_KEYSTORE: ${{ runner.temp }}/bbos7-release.jks
+          BBOS7_KEYSTORE_PASSWORD: ${{ secrets.BBOS7_KEYSTORE_PASSWORD }}
+          BBOS7_KEY_ALIAS: ${{ secrets.BBOS7_KEY_ALIAS }}
+          BBOS7_KEY_PASSWORD: ${{ secrets.BBOS7_KEY_PASSWORD }}
+        run: |
+          export VERSION_NAME="${GITHUB_REF_NAME#v}"
+          export VERSION_CODE="${{ github.run_number }}"
+          chmod +x gradlew
+          ./gradlew :app:assembleRelease --no-daemon
+          mv app/build/outputs/apk/release/app-release.apk "BBOS7-Launcher-${VERSION_NAME}.apk"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: BBOS7-Launcher-*.apk
+          generate_release_notes: true

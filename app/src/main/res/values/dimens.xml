@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Man hinh 720x720 @232dpi = 496x496dp. Luoi 6 cot nhu BBOS7 => ~82dp/o. -->
+    <dimen name="icon_size">64dp</dimen>
+    <dimen name="cell_padding">6dp</dimen>
+    <dimen name="tab_carousel_height">30dp</dimen>
+    <dimen name="app_label_height">22dp</dimen>
+    <!--
+      Nac PEEK: thanh tab 30 + dong ten app 22 + o icon (64 icon + 6 padding hai ben) 76
+      + 8 le day = 136. Thieu mot chut thoi la hang icon bi mep man hinh cat mat chan.
+    -->
+    <dimen name="tray_peek_height">136dp</dimen>
+    <!-- Chi con dong ho lon va hai icon: ngay/song/pin da co status bar Android lo. -->
+    <dimen name="status_panel_height">64dp</dimen>
+</resources>

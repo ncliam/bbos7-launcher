@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BBOS7</string>
+    <string name="unpin">Unpin from home</string>
+    <string name="pin">Pin to home</string>
+    <string name="app_info">App info</string>
+    <string name="assign_tab">Sort into section</string>
+    <string name="assign_shortcut">Assign shortcut</string>
+    <string name="clear_shortcut">Clear shortcut (Alt+%1$s)</string>
+    <string name="assign_shortcut_title">Shortcut for %1$s</string>
+    <string name="assign_shortcut_hint">Press a letter key. Then on the home screen, hold Alt and press it to open the app.</string>
+    <string name="shortcut_assigned">Alt+%1$s opens %2$s</string>
+    <string name="shortcut_reassigned">Alt+%1$s opens %2$s (taken from %3$s)</string>
+    <string name="added_to_tab">Added to %1$s</string>
+    <string name="removed_from_tab">Removed from %1$s</string>
+    <string name="launch_failed">Couldn\'t open %1$s</string>
+
+    <string name="tab_favorites">Favorites</string>
+    <string name="tab_all">All</string>
+    <string name="tab_finance">Finance</string>
+    <string name="tab_social">Social</string>
+    <string name="tab_entertainment">Entertainment</string>
+    <string name="tab_frequent">Frequent</string>
+
+    <string name="search_hint">Search apps</string>
+    <string name="ringer_profile">Sound profile</string>
+    <string name="connections">Manage connections</string>
+    <string name="no_carrier">No SIM</string>
+    <string name="conn_wifi">Wi-Fi</string>
+    <string name="conn_mobile">Mobile</string>
+    <string name="conn_none">Offline</string>
+    <string name="battery_percent">%1$d%%</string>
+
+    <string name="empty_favorites">No apps pinned yet.\nOpen the All tab and long-press an app to pin it here.</string>
+    <string name="empty_frequent">No data yet. This list builds up as you use the phone.</string>
+    <string name="empty_search">No apps found.</string>
+    <string name="empty_generic">No apps in this section.</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BBOS7</string>
+    <string name="unpin">Gỡ khỏi màn hình chính</string>
+    <string name="pin">Ghim lên màn hình chính</string>
+    <string name="app_info">Thông tin ứng dụng</string>
+    <string name="assign_tab">Sắp xếp vào mục</string>
+    <string name="assign_shortcut">Gán phím tắt</string>
+    <string name="clear_shortcut">Bỏ phím tắt (Alt+%1$s)</string>
+    <string name="assign_shortcut_title">Phím tắt cho %1$s</string>
+    <string name="assign_shortcut_hint">Nhấn một phím chữ. Sau đó ở màn hình chính, giữ Alt và nhấn phím đó để mở ứng dụng.</string>
+    <string name="shortcut_assigned">Alt+%1$s mở %2$s</string>
+    <string name="shortcut_reassigned">Alt+%1$s mở %2$s (lấy lại từ %3$s)</string>
+    <string name="added_to_tab">Đã thêm vào %1$s</string>
+    <string name="removed_from_tab">Đã bỏ khỏi %1$s</string>
+    <string name="launch_failed">Không mở được %1$s</string>
+
+    <string name="tab_favorites">Yêu thích</string>
+    <string name="tab_all">Tất cả</string>
+    <string name="tab_finance">Tài chính</string>
+    <string name="tab_social">Mạng xã hội</string>
+    <string name="tab_entertainment">Giải trí</string>
+    <string name="tab_frequent">Hay dùng</string>
+
+    <string name="search_hint">Tìm ứng dụng</string>
+    <string name="ringer_profile">Hồ sơ âm thanh</string>
+    <string name="connections">Quản lý kết nối</string>
+    <string name="no_carrier">Không có SIM</string>
+    <string name="conn_wifi">Wi-Fi</string>
+    <string name="conn_mobile">Di động</string>
+    <string name="conn_none">Ngoại tuyến</string>
+    <string name="battery_percent">%1$d%%</string>
+
+    <string name="empty_favorites">Chưa ghim ứng dụng nào.\nMở tab Tất cả, giữ lâu một ứng dụng để ghim lên đây.</string>
+    <string name="empty_frequent">Chưa có dữ liệu. Danh sách này tự hình thành khi bạn dùng máy.</string>
+    <string name="empty_search">Không tìm thấy ứng dụng nào.</string>
+    <string name="empty_generic">Không có ứng dụng nào trong mục này.</string>
+</resources>

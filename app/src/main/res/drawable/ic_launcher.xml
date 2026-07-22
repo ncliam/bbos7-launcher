@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#1B1F24"
+        android:pathData="M4,4h40v40h-40z" />
+    <!-- Bon o vuong kieu luoi BBOS7 -->
+    <path
+        android:fillColor="#C9CED6"
+        android:pathData="M12,12h9v9h-9z M27,12h9v9h-9z M12,27h9v9h-9z" />
+    <path
+        android:fillColor="#5A6472"
+        android:pathData="M27,27h9v9h-9z" />
+</vector>
