@@ -6,6 +6,15 @@ A BlackBerry OS 7–style launcher for the **Unihertz / BlackBerry Zinwa Q25** �
 
 **🇬🇧 English** · [🇻🇳 Tiếng Việt](#tiếng-việt)
 
+### Screenshots
+
+| Home (peek) | Pull-up tray | Type to search |
+|:---:|:---:|:---:|
+| ![Home](docs/home.png) | ![Tray](docs/tray.png) | ![Search](docs/search.png) |
+| Big clock, pinned favorites | Tabs + full app list | Just start typing |
+
+<sub>Shots from a Q25 with the system language set to Vietnamese. · Ảnh chụp trên Q25 đặt ngôn ngữ tiếng Việt.</sub>
+
 ---
 
 ## English
