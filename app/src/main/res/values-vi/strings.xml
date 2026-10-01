@@ -14,6 +14,9 @@
     <string name="added_to_tab">Đã thêm vào %1$s</string>
     <string name="removed_from_tab">Đã bỏ khỏi %1$s</string>
     <string name="launch_failed">Không mở được %1$s</string>
+    <string name="open_portrait">Cửa sổ dọc</string>
+    <string name="open_portrait_full">Dọc toàn khung</string>
+    <string name="phone_ratio_unsupported">Cửa sổ freeform đang tắt. Bật lại bằng: adb shell settings put global enable_freeform_support 1</string>
 
     <string name="tab_favorites">Yêu thích</string>
     <string name="tab_all">Tất cả</string>

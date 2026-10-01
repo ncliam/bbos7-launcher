@@ -38,5 +38,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- Nen den sau cua so ti le dien thoai. Task rieng de khong keo launcher theo. -->
+        <activity
+            android:name=".PhoneRatioBackdrop"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity="com.q25.bbos7.backdrop"
+            android:theme="@style/PhoneRatioBackdropTheme" />
     </application>
 </manifest>

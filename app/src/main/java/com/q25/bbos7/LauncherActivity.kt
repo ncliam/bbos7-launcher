@@ -32,6 +32,7 @@ import com.q25.bbos7.data.AppClassifier
 import com.q25.bbos7.data.AppEntry
 import com.q25.bbos7.data.AppRepository
 import com.q25.bbos7.data.AppTab
+import com.q25.bbos7.data.PhoneRatio
 import com.q25.bbos7.data.PinnedApps
 import com.q25.bbos7.data.Shortcuts
 import com.q25.bbos7.data.TabOverrides
@@ -538,7 +539,9 @@ class LauncherActivity : ComponentActivity() {
 
     // --- Hanh dong ---------------------------------------------------------
 
-    private fun launch(entry: AppEntry, source: View) {
+    private fun launch(entry: AppEntry, source: View) = launch(entry, source, PhoneRatio.Mode.FULLSCREEN)
+
+    private fun launch(entry: AppEntry, source: View, mode: PhoneRatio.Mode) {
         val intent = Intent(Intent.ACTION_MAIN)
             .addCategory(Intent.CATEGORY_LAUNCHER)
             .setComponent(entry.component)
@@ -546,8 +549,24 @@ class LauncherActivity : ComponentActivity() {
         val options = ActivityOptions.makeScaleUpAnimation(
             source, 0, 0, source.width, source.height
         )
+        val phone = mode != PhoneRatio.Mode.FULLSCREEN
+        val bundle = if (PhoneRatio.isSupported(this, mode)) {
+            PhoneRatio.applyTo(options, mode, windowManager.currentWindowMetrics)
+        } else {
+            options.toBundle()
+        }
         try {
-            startActivity(intent, options.toBundle())
+            val pkg = entry.component.packageName
+            if (phone) PhoneRatio.remember(this, pkg)
+            // App tung mo trong khung co the van con task trong khung: mo nen den truoc cho chac.
+            // Neu task do da bi dong thi app mo toan man, che kin nen va nen tu don (noHistory).
+            if (phone || PhoneRatio.wasOpened(this, pkg)) {
+                startActivity(
+                    Intent(this, PhoneRatioBackdrop::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                )
+            }
+            startActivity(intent, bundle)
             repository.recordLaunch(entry)
         } catch (e: Exception) {
             // App vua bi go nhung danh sach chua kip cap nhat.
@@ -587,7 +606,9 @@ class LauncherActivity : ComponentActivity() {
                 )
             }
 
-            menu.add(0, MENU_INFO, 3, R.string.app_info)
+            menu.add(0, MENU_PORTRAIT, 3, R.string.open_portrait)
+            menu.add(0, MENU_PORTRAIT_FULL, 3, R.string.open_portrait_full)
+            menu.add(0, MENU_INFO, 4, R.string.app_info)
             setOnMenuItemClickListener { item ->
                 if (item.groupId == GROUP_TABS) {
                     toggleTab(entry, AppTab.assignable[item.itemId], !item.isChecked)
@@ -644,6 +665,16 @@ class LauncherActivity : ComponentActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
+    private fun openInPhoneRatio(entry: AppEntry, mode: PhoneRatio.Mode) {
+        if (!PhoneRatio.isSupported(this, mode)) {
+            Toast.makeText(this, R.string.phone_ratio_unsupported, Toast.LENGTH_LONG).show()
+            return
+        }
+        val anchor = currentGrid()?.findViewHolderForItemId(entry.key.hashCode().toLong())?.itemView
+            ?: tabPager
+        launch(entry, anchor, mode)
+    }
+
     private fun toggleTab(entry: AppEntry, tab: AppTab, member: Boolean) {
         overrides.set(entry, tab, member, classifier.belongsAutomatically(entry, tab))
         refresh()
@@ -677,6 +708,16 @@ class LauncherActivity : ComponentActivity() {
             true
         }
 
+        MENU_PORTRAIT -> {
+            openInPhoneRatio(entry, PhoneRatio.Mode.FRAMED)
+            true
+        }
+
+        MENU_PORTRAIT_FULL -> {
+            openInPhoneRatio(entry, PhoneRatio.Mode.BORDERLESS)
+            true
+        }
+
         MENU_INFO -> {
             startActivity(
                 Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -702,6 +743,8 @@ class LauncherActivity : ComponentActivity() {
         const val MENU_TABS = 4
         const val MENU_SHORTCUT = 5
         const val MENU_SHORTCUT_CLEAR = 6
+        const val MENU_PORTRAIT = 7
+        const val MENU_PORTRAIT_FULL = 8
         const val GROUP_TABS = 10
 
         val DIACRITICS = "\\p{InCombiningDiacriticalMarks}+".toRegex()
