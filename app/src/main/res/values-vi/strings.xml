@@ -27,6 +27,7 @@
 
     <string name="search_hint">Tìm ứng dụng</string>
     <string name="ringer_profile">Hồ sơ âm thanh</string>
+    <string name="ringer_blocked_by_dnd">Đang bật Không làm phiền — hãy tắt trong Cài đặt</string>
     <string name="connections">Quản lý kết nối</string>
     <string name="no_carrier">Không có SIM</string>
     <string name="conn_wifi">Wi-Fi</string>

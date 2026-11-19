@@ -27,6 +27,7 @@
 
     <string name="search_hint">Search apps</string>
     <string name="ringer_profile">Sound profile</string>
+    <string name="ringer_blocked_by_dnd">Do Not Disturb is on — turn it off in Settings</string>
     <string name="connections">Manage connections</string>
     <string name="no_carrier">No SIM</string>
     <string name="conn_wifi">Wi-Fi</string>

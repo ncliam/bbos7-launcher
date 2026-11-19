@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
+import android.provider.Settings
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.q25.bbos7.R
 import java.text.SimpleDateFormat
@@ -84,9 +86,22 @@ class StatusPanelView @JvmOverloads constructor(
      */
     private fun cycleRinger() {
         val am = audio ?: return
-        am.ringerMode = when (am.ringerMode) {
+        val target = when (am.ringerMode) {
             AudioManager.RINGER_MODE_NORMAL -> AudioManager.RINGER_MODE_VIBRATE
             else -> AudioManager.RINGER_MODE_NORMAL
+        }
+        try {
+            am.ringerMode = target
+        } catch (e: SecurityException) {
+            // Dang bat Khong lam phien: Android cam doi che do chuong neu app
+            // khong co quyen DND. Mo Cai dat am thanh cho nguoi dung tu tat.
+            Toast.makeText(context, R.string.ringer_blocked_by_dnd, Toast.LENGTH_SHORT).show()
+            runCatching {
+                context.startActivity(
+                    Intent(Settings.ACTION_SOUND_SETTINGS)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
+            }
         }
         refresh()
     }
